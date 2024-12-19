@@ -145,7 +145,7 @@ This project focuses on text language translation from German to English using a
    - **Padding & Truncation**: Performed to ensure uniform input sizes within a batch.
    - Converted tokenized sentences to tensors for model training.
      
-![image](https://github.com/user-attachments/assets/b16bc50d-8ee1-48a5-b551-14e2e03f3a8b)
+   ![image](https://github.com/user-attachments/assets/b16bc50d-8ee1-48a5-b551-14e2e03f3a8b)
 
 
 ---
@@ -345,7 +345,7 @@ This project focuses on text summarization. The input is a long review of Amazon
 2. **Regularization**:
    - Early stopping: Halt training after 5 epochs of no improvement.
   
-![image](https://github.com/user-attachments/assets/55013280-92dd-470e-9f66-e28166d91146)
+   ![image](https://github.com/user-attachments/assets/55013280-92dd-470e-9f66-e28166d91146)
 
 
 ---
@@ -392,5 +392,65 @@ This project focuses on text summarization. The input is a long review of Amazon
 - **Process**:
   - Remove padding (`0`).
   - Convert indices into words using the reverse source vocabulary.
+
+---
+
+# 6) Twitter Sentiment Analysis
+
+## Project Overview
+This project addresses a Kaggle competition hosted by Twitter. The goal is to identify tweets containing racist or sexist content, enabling measures to block such tweets and reduce online bullying and negativity.
+
+---
+
+## Pre-Processing
+
+### Steps:
+1. Converted all text to **lowercase**.
+2. Replaced emojis with their **meanings**.
+3. Removed pre-encoded emojis that could not be **demojized**.
+4. Expanded **contractions** (e.g., `'ve` → `have`).
+5. Replaced **special characters** with their names, except for `#` (useful for identifying trends).
+6. Replaced usernames (`@tags`) with `user` and subsequently **dropped them** to maintain privacy.
+7. Removed **HTML tags**.
+8. Abbreviated **common terms** (e.g., `GM` → "Good Morning").
+9. Removed **stop words**.
+10. Applied **stemming** to reduce words to their root forms.
+
+### Exclusions:
+- **Spelling correction**: Skipped due to the large dataset size and the computational cost.
+
+---
+
+## Feature Engineering
+
+### Key Steps:
+1. **Hashtag Extraction**:
+   - Analyzed hashtags (`#`) to evaluate their association with racist or non-racist tweets.
+  
+   ![image](https://github.com/user-attachments/assets/3d95e271-94f8-4955-a45d-b7868396d593)
+
+2. **Corpus Creation**:
+   - Combined training and testing datasets to build a **corpus of words**.
+   - Selected the **top 1000 most frequent words** as vector dimensions to represent each tweet.
+
+3. **Comparison**:
+   - Evaluated **Bag of Words (BOW)** and **TF-IDF** methods for vector representation.
+
+4. **Feature Combination**:
+   - Created 20 additional features based on 10 common labels from each category (racist and non-racist).
+   - Final dataset comprised **1020 features** (1000 from BOW/TF-IDF + 20 custom features).
+
+---
+
+## Model Training & Evaluation
+
+### Classifier:
+- Used a **Logistic Regression** model for classification.
+
+### Results:
+1. **Bag of Words (BOW)**:
+   - Achieved an **f1 score** of **0.544**.
+2. **TF-IDF**:
+   - Achieved an improved **f1 score** of **0.559**.
 
 ---
